@@ -1,25 +1,30 @@
 import Modal from 'react-modal';
 import styles from './styles.module.scss';
-import {FiX} from 'react-icons/fi';
+import { FiX } from 'react-icons/fi';
 import { FormEvent, useState } from 'react';
+import { useChart } from '../../hooks/useCharts';
 
 interface NewChartModalProps {
     IsOpen: boolean;
-    IsRequestClose:() => void;
+    IsRequestClose: () => void;
 }
 
-export function NewChartModal({IsOpen, IsRequestClose}:NewChartModalProps) {
+export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
 
-    const [title,setTitle] = useState('');
+    const { createChart } = useChart();
 
-    async function handleCreateNewChart(event: FormEvent){
-        event.preventDefault(); 
+    const [title, setTitle] = useState('');
 
-        // await createChart({
-        //     title,
-        // });
+    async function handleCreateNewChart(event: FormEvent) {
+        event.preventDefault();
+
+        await createChart({
+            title,
+        });
 
         setTitle('');
+
+        console.log('fechando modal');
 
         IsRequestClose();
     }
@@ -32,13 +37,22 @@ export function NewChartModal({IsOpen, IsRequestClose}:NewChartModalProps) {
             className={styles.reactModalContent}
             onRequestClose={IsRequestClose}
         >
+            <button type="button"
+                onClick={handleCreateNewChart}
+                className={styles.reactModalClose}>
+                <FiX />
+            </button>
+
             <form className={styles.Container}>
-                <button type="button"
-                    onClick={handleCreateNewChart}
-                    className={styles.reactModalClose}>
-                    <FiX/>
-                </button>
-                <h2>MODAL</h2>
+
+
+                <h2>Cadastrar Gráfico</h2>
+
+                <input
+                    placeholder="Titulo"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                />
             </form>
         </Modal>
     )

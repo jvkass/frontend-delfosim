@@ -25,7 +25,7 @@ export function ChartsProvider({children}:ChartsProviderProps){
 
     useEffect(() => {
         api.get("charts")
-            .then(response => setCharts(response.data.transactions))
+            .then(response => setCharts(response.data.charts))
   
     }, [])
 

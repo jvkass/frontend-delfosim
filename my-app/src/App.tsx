@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Dashboard } from './components/Dashboard';
 import { Header } from './components/Header'
 import { NewChartModal } from './components/NewChartModal';
+import { ChartsProvider } from './hooks/useCharts';
 import './styles/global.scss'
 
 export function App() {
@@ -16,14 +17,14 @@ export function App() {
   }
 
   return (
-    <div className="App">
+    <ChartsProvider>
       <Header />
       <Dashboard onOpenNewChartModal={handleOpenNewChartModal}/>
       <NewChartModal
         IsOpen={isNewChartModalOpen}
         IsRequestClose={handleCloseNewChartModal}
       />
-    </div>
+    </ChartsProvider>
   );
 }
 
