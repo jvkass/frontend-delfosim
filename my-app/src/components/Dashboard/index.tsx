@@ -2,12 +2,16 @@ import styles from './styles.module.scss';
 import { Charts } from '../Charts';
 import { NewWidget } from '../NewWidget';
 
-export function Dashboard() {
+interface DashboardProps{
+    onOpenNewChartModal: () => void;
+}
+
+export function Dashboard({onOpenNewChartModal}:DashboardProps) {
 
     return (
         <div className={styles.dashboardContainer}>
            <Charts/>
-           <NewWidget/>
+           <NewWidget isOpenNewChartModal={onOpenNewChartModal}/>
         </div>
     )
 }
