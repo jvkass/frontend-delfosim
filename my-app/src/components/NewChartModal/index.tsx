@@ -23,9 +23,7 @@ export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
         });
 
         setTitle('');
-
-        console.log('fechando modal');
-
+        
         IsRequestClose();
     }
 
@@ -38,12 +36,12 @@ export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
             onRequestClose={IsRequestClose}
         >
             <button type="button"
-                onClick={handleCreateNewChart}
+                onClick={IsRequestClose}
                 className={styles.reactModalClose}>
                 <FiX />
             </button>
 
-            <form className={styles.Container}>
+            <form className={styles.Container} onSubmit={handleCreateNewChart}>
 
 
                 <h2>Cadastrar Gráfico</h2>
@@ -53,7 +51,10 @@ export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                 />
+
+                <button type="submit">Cadastrar</button>
             </form>
+
         </Modal>
     )
 }
