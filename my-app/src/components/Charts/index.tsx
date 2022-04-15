@@ -2,11 +2,16 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import theme from 'highcharts/themes/dark-blue';
 
-export function Charts(){
+interface ChartsProps {
+    id:number;
+    title:string;
+}
+
+export function Charts({title}:ChartsProps){
     
     const options = {
         title: {
-            text: 'Solar Employment Growth by Sector, 2010-2016'
+            text: `${title}`
         },
         subtitle: {
             text: 'Source: delfosim.com'
