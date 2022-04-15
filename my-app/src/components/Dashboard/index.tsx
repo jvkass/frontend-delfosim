@@ -12,8 +12,10 @@ export function Dashboard({ onOpenNewChartModal }: DashboardProps) {
 
     return (
         <div className={styles.dashboardContainer}>
-            { charts.map(chart =>(
-                <Charts id={chart.id} title={chart.title}/>
+            {charts.map(chart => (
+                <div className={styles.chartContainer}>
+                    <Charts id={chart.id} title={chart.title} />
+                </div>
             ))}
             <NewWidget isOpenNewChartModal={onOpenNewChartModal} />
         </div>

@@ -1,17 +1,27 @@
 import styles from './styles.module.scss';
 import logoImg from '../../assets/logo.png'
+import { useState } from 'react';
 
-export function Header() {
+interface HeaderProps {
+    isSearch: string;
+    isSetSearch: (search: string) => void;
+}
+
+export function Header({ isSearch, isSetSearch }: HeaderProps) {
 
     return (
         <header className={styles.headerContainer}>
             <div className={styles.headerContent}>
                 <img src={logoImg} alt="delfosim" />
                 <nav>
-                    <a>Home</a>
+                    <a href='/'>Home</a>
                 </nav>
 
-                <input placeholder='Search...'></input>
+                <input
+                    value={isSearch}
+                    onChange={e => isSetSearch(e.target.value)}
+                    placeholder='Search...'
+                />
             </div>
         </header>
     );

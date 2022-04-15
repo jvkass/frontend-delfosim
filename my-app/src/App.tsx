@@ -7,6 +7,12 @@ import './styles/global.scss'
 
 export function App() {
   const [isNewChartModalOpen, setIsNewChartModalOpen] = useState(false);
+  const [search, setIsSearch] = useState('');
+
+  function handleInputSearch(search:string){
+    setIsSearch(search);
+    console.log(search)
+  }
 
   function handleOpenNewChartModal() {
     setIsNewChartModalOpen(true);
@@ -18,7 +24,7 @@ export function App() {
 
   return (
     <ChartsProvider>
-      <Header />
+      <Header isSearch={search} isSetSearch={handleInputSearch}/>
       <Dashboard onOpenNewChartModal={handleOpenNewChartModal}/>
       <NewChartModal
         IsOpen={isNewChartModalOpen}
