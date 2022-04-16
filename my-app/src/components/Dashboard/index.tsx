@@ -5,14 +5,28 @@ import { useChart } from '../../hooks/useCharts';
 
 interface DashboardProps {
     onOpenNewChartModal: () => void;
+    isSearch: string;
 }
 
-export function Dashboard({ onOpenNewChartModal }: DashboardProps) {
+interface Chart {
+    id:number;
+    title:string;
+}
+
+
+
+export function Dashboard({ onOpenNewChartModal, isSearch }: DashboardProps) {
     const { charts } = useChart();
+
+    function searchChartTitle(value:Chart){
+        if(value.title.includes(isSearch)) return value.title;
+    }
+
+    const chartsFilters = charts.filter(searchChartTitle);
 
     return (
         <div className={styles.dashboardContainer}>
-            {charts.map(chart => (
+            {chartsFilters.map(chart => (
                 <div className={styles.chartContainer}>
                     <Charts id={chart.id} title={chart.title} />
                 </div>

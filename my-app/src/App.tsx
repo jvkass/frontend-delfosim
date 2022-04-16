@@ -25,7 +25,7 @@ export function App() {
   return (
     <ChartsProvider>
       <Header isSearch={search} isSetSearch={handleInputSearch}/>
-      <Dashboard onOpenNewChartModal={handleOpenNewChartModal}/>
+      <Dashboard isSearch={search} onOpenNewChartModal={handleOpenNewChartModal}/>
       <NewChartModal
         IsOpen={isNewChartModalOpen}
         IsRequestClose={handleCloseNewChartModal}

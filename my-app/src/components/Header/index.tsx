@@ -1,7 +1,5 @@
 import styles from './styles.module.scss';
 import logoImg from '../../assets/logo.png'
-import { useState } from 'react';
-
 interface HeaderProps {
     isSearch: string;
     isSetSearch: (search: string) => void;
@@ -20,7 +18,7 @@ export function Header({ isSearch, isSetSearch }: HeaderProps) {
                 <input
                     value={isSearch}
                     onChange={e => isSetSearch(e.target.value)}
-                    placeholder='Search...'
+                    placeholder='Search by title...'
                 />
             </div>
         </header>
