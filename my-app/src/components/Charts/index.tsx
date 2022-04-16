@@ -1,14 +1,25 @@
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import theme from 'highcharts/themes/dark-blue';
-
+import styles from './styles.module.scss';
+import { FiEdit, FiX } from 'react-icons/fi';
+import { useChart } from '../../hooks/useCharts';
+import { FormEvent } from 'react';
 interface ChartsProps {
-    id:number;
-    title:string;
+    id: number;
+    title: string;
 }
 
-export function Charts({title}:ChartsProps){
-    
+export function Charts({ id, title }: ChartsProps) {
+    const { deleteChart } = useChart();
+
+    async function handleDeleteChart(event: FormEvent) {
+        event.preventDefault();
+
+        await deleteChart(id);
+
+    }
+
     const options = {
         title: {
             text: `${title}`
@@ -50,7 +61,7 @@ export function Charts({title}:ChartsProps){
             name: 'Other',
             data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
         }],
-    
+
         responsive: {
             rules: [{
                 condition: {
@@ -68,8 +79,12 @@ export function Charts({title}:ChartsProps){
     }
 
     theme(Highcharts);
-    
-    return(
-        <HighchartsReact highcharts={Highcharts} options = {options}/>
+
+    return (
+        <div className={styles.containerCharts}>
+            <HighchartsReact highcharts={Highcharts} options={options} />
+            <button>  <FiEdit size={30} /> </button>
+            <button onClick={handleDeleteChart}>  <FiX size={30} /> </button>
+        </div>
     )
 }

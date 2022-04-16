@@ -37,6 +37,7 @@ createServer({
       return schema.create('chart',data);
     })
 
+    this.del('/charts/:id')
 
   }
 })

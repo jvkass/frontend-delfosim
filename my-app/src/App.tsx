@@ -11,7 +11,6 @@ export function App() {
 
   function handleInputSearch(search:string){
     setIsSearch(search);
-    console.log(search)
   }
 
   function handleOpenNewChartModal() {

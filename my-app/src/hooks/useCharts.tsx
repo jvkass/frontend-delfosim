@@ -1,40 +1,41 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 interface Chart {
-    id:number;
-    title:string;
+    id: number;
+    title: string;
 }
 
-type ChartInput = Pick<Chart,'title'>;
+type ChartInput = Pick<Chart, 'title'>;
 
 interface ChartsProviderProps {
-    children:ReactNode;
+    children: ReactNode;
 }
 
 interface ChartsContextData {
     charts: Chart[],
     createChart: (chart: ChartInput) => Promise<void>;
+    deleteChart: (id: number) => Promise<void>;
 }
 
 export const ChartsContext = createContext<ChartsContextData>(
     {} as ChartsContextData
 );
 
-export function ChartsProvider({children}:ChartsProviderProps){
+export function ChartsProvider({ children }: ChartsProviderProps) {
     const [charts, setCharts] = useState<Chart[]>([]);
 
     useEffect(() => {
         api.get("charts")
             .then(response => setCharts(response.data.charts))
-  
+
     }, [])
 
-    async function createChart(chartInput: ChartInput){
-        const response = await api.post('/charts',{
+    async function createChart(chartInput: ChartInput) {
+        const response = await api.post('/charts', {
             ...chartInput, createdAt: new Date(),
         })
 
-        const {chart} = response.data;
+        const { chart } = response.data;
 
         setCharts([
             ...charts,
@@ -42,15 +43,26 @@ export function ChartsProvider({children}:ChartsProviderProps){
         ]);
     }
 
+    async function deleteChart(id: number) {
+        const response = await api.delete(`/charts/${id}`)
+
+        if (response.status === 204) {
+            charts.splice(0, id);
+        }
+        setCharts([
+            ...charts
+        ]);
+    }
+
     return (
-        <ChartsContext.Provider value={{charts,createChart}}>
+        <ChartsContext.Provider value={{ charts, createChart, deleteChart }}>
             {children}
         </ChartsContext.Provider>
     );
 }
 
-export function useChart(){
+export function useChart() {
     const context = useContext(ChartsContext);
- 
+
     return context;
 }
