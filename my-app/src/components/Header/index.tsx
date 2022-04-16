@@ -12,7 +12,7 @@ export function Header({ isSearch, isSetSearch }: HeaderProps) {
             <div className={styles.headerContent}>
                 <img src={logoImg} alt="delfosim" />
                 <nav>
-                    <a href='/'>Home</a>
+                    <a href='/#'>Home</a>
                 </nav>
 
                 <input

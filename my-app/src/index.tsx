@@ -37,6 +37,14 @@ createServer({
       return schema.create('chart',data);
     })
 
+    this.put('/charts/:id', (schema, request): any => {
+      let newAttrs = JSON.parse(request.requestBody)
+      let id = request.params.id
+      let chart = schema.find('chart',id);
+
+      return chart?.update(newAttrs);
+    })
+
     this.del('/charts/:id')
 
   }

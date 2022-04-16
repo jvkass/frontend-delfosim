@@ -4,27 +4,28 @@ import { FiX } from 'react-icons/fi';
 import { FormEvent, useState } from 'react';
 import { useChart } from '../../hooks/useCharts';
 
-interface NewChartModalProps {
+interface UpdateChartModalProps {
     IsOpen: boolean;
     IsRequestClose: () => void;
+    IsId: number;
+    IsTitle: string;
 }
 
-export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
+export function UpdateChartModal({ IsId, IsTitle, IsOpen, IsRequestClose }: UpdateChartModalProps) {
 
-    const { createChart } = useChart();
+    const { updateChart } = useChart();
 
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState(IsTitle);
 
-    async function handleCreateNewChart(event: FormEvent) {
+    async function handleUpdateChart(event: FormEvent) {
         event.preventDefault();
 
-        await createChart({
-            title,
-        });
-
-        setTitle('');
+        await updateChart(
+            IsId,
+            { title },
+        );
         
-        console.log('Cadastrado com sucesso');
+        console.log('Atualizado com sucesso');
 
         IsRequestClose();
     }
@@ -43,10 +44,10 @@ export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
                 <FiX />
             </button>
 
-            <form className={styles.Container} onSubmit={handleCreateNewChart}>
+            <form className={styles.Container} onSubmit={handleUpdateChart}>
 
 
-                <h2>Cadastrar Gráfico</h2>
+                <h2>Atualizar Gráfico</h2>
 
                 <input
                     placeholder="Titulo"
@@ -54,7 +55,7 @@ export function NewChartModal({ IsOpen, IsRequestClose }: NewChartModalProps) {
                     onChange={e => setTitle(e.target.value)}
                 />
 
-                <button type="submit">Cadastrar</button>
+                <button type="submit">Atualizar</button>
             </form>
 
         </Modal>

@@ -4,7 +4,8 @@ import theme from 'highcharts/themes/dark-blue';
 import styles from './styles.module.scss';
 import { FiEdit, FiX } from 'react-icons/fi';
 import { useChart } from '../../hooks/useCharts';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import { UpdateChartModal } from '../UpdateChartModal';
 interface ChartsProps {
     id: number;
     title: string;
@@ -12,6 +13,16 @@ interface ChartsProps {
 
 export function Charts({ id, title }: ChartsProps) {
     const { deleteChart } = useChart();
+
+    const [isUpdateChartModalOpen, setIsUpdateChartModalOpen] = useState(false);
+
+    function handleOpenUpdateChartModal() {
+        setIsUpdateChartModalOpen(true);
+    }
+
+    function handleCloseUpdateChartModal() {
+        setIsUpdateChartModalOpen(false);
+    }
 
     async function handleDeleteChart(event: FormEvent) {
         event.preventDefault();
@@ -83,8 +94,14 @@ export function Charts({ id, title }: ChartsProps) {
     return (
         <div className={styles.containerCharts}>
             <HighchartsReact highcharts={Highcharts} options={options} />
-            <button>  <FiEdit size={30} /> </button>
+            <button onClick={handleOpenUpdateChartModal}>  <FiEdit size={30} /> </button>
             <button onClick={handleDeleteChart}>  <FiX size={30} /> </button>
+            <UpdateChartModal
+                IsId={id}
+                IsTitle={title}
+                IsOpen={isUpdateChartModalOpen}
+                IsRequestClose={handleCloseUpdateChartModal}
+            />
         </div>
     )
 }

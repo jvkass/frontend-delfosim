@@ -15,6 +15,7 @@ interface ChartsContextData {
     charts: Chart[],
     createChart: (chart: ChartInput) => Promise<void>;
     deleteChart: (id: number) => Promise<void>;
+    updateChart: (id: number, chartInput: ChartInput) => Promise<void>;
 }
 
 export const ChartsContext = createContext<ChartsContextData>(
@@ -43,19 +44,34 @@ export function ChartsProvider({ children }: ChartsProviderProps) {
         ]);
     }
 
+    async function updateChart(id: number, chartInput: ChartInput) {
+        const response = await api.put(`/charts/${id}`, {
+            ...chartInput,
+        })
+
+        const { chart } = response.data;
+
+        charts[id-1] = chart
+
+        setCharts([
+            ...charts
+        ]);
+    }
+
     async function deleteChart(id: number) {
         const response = await api.delete(`/charts/${id}`)
 
         if (response.status === 204) {
             charts.splice(0, id);
         }
+
         setCharts([
             ...charts
         ]);
     }
 
     return (
-        <ChartsContext.Provider value={{ charts, createChart, deleteChart }}>
+        <ChartsContext.Provider value={{ charts, createChart, deleteChart, updateChart }}>
             {children}
         </ChartsContext.Provider>
     );
